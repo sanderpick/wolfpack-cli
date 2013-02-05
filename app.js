@@ -181,14 +181,11 @@ if (!module.parent) {
         secret: 'b29cec4949ef7c0d14cd'
       });
       new MemberDb(db, {
-        app: app,
-        ensureIndexes: true,
-        redisClient: redisClient
+        ensureIndexes: true
       }, this.parallel());
       new EventDb(db, {
-        app: app,
         ensureIndexes: true,
-        pusher: pusher,
+        pusher: pusher
       }, this.parallel());
     },
     function (err, mDb, eDb) {
