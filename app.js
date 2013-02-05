@@ -8,6 +8,8 @@ var argv = optimist
     .describe('help', 'Get help')
     .describe('dev', 'Environment')
       .boolean('dev')
+    .describe('port', 'Port to listen on')
+      .default('port', 3645)
     .describe('db', 'MongoDb URL to connect to')
       .default('db', 'mongodb://nodejitsu_sanderpick:as3nonkk9502pe1ugseg3mj9ev@ds043947.mongolab.com:43947/nodejitsu_sanderpick_nodejitsudb9750563292')
     .argv;
@@ -24,7 +26,7 @@ if (argv._.length || argv.help) {
 /**
  * Module dependencies.
  */
-var http = require('http');
+var express = require('express');
 var mongodb = require('mongodb');
 var ObjectID = require('mongodb').BSONPure.ObjectID;
 var util = require('util'), debug = util.debug, inspect = util.inspect;
@@ -35,6 +37,7 @@ var templates = require('./templates');
 var _ = require('underscore');
 _.mixin(require('underscore.string'));
 var Step = require('step');
+var Email = require('./email');
 
 var notifier = require('mail-notifier');
 
@@ -42,12 +45,34 @@ var MemberDb = require('./member_db.js').MemberDb;
 var EventDb = require('./event_db.js').EventDb;
 var Pusher = require('pusher');
 
+var app = express();
 var memberDb;
 var eventDb;
 var pusher;
 var channels = process.env.NODE_ENV === 'production' ?
                 { all: 'island' } :
                 { all: 'island_test' };
+
+app.configure(function () {
+  app.set('port', process.env.PORT || argv.port);
+  app.set('views', __dirname + '/views');
+  app.set('view engine', 'jade');
+  app.use(express.logger('dev'));
+  app.use(express.methodOverride());
+  app.use(app.router);
+});
+
+app.configure('development', function () {
+  app.set('home_uri', 'http://local.island.io:' + argv.port);
+  Email.setHomeURI('http://local.island.io:' + argv.port);
+  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+});
+
+app.configure('production', function () {
+  app.set('home_uri', 'http://island.io');
+  Email.setHomeURI('http://island.io');
+  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+});
 
 var templateUtil = {
   formatCommentText: function (str) {
@@ -197,6 +222,11 @@ if (!module.parent) {
     },
     function (err) {
       if (err) return this(err);
+
+      // init express
+      app.listen(argv.port, function () {
+        console.log('Server listening on port ' + argv.port);
+      });
 
       // listen for new mail
       notifier({
