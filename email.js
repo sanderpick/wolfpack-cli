@@ -1,43 +1,35 @@
 // Handling for, wait for it ... email!
 
-
 /**
  * Module dependencies.
  */
-
 var mailer = require('emailjs');
 var path = require('path');
 var jade = require('jade');
 var _ = require('underscore');
 _.mixin(require('underscore.string'));
-var util = require('util');
-var debug = util.debug, inspect = util.inspect;
 var Step = require('step');
 
 var SMTP;
 var server = {
-  user: 'robot@island.io',
-  password: 'I514nDr06ot',
+  user: 'robot@grr.io',
+  password: 'w0lfpackm0d3',
   host: 'smtp.gmail.com',
   ssl: true,
 };
 var defaults = {
-  from: 'Island <robot@island.io>',
+  from: 'Wolfpack <robot@grr.io>',
 };
-var HOME_URI;
-exports.setHomeURI = function (uri) {
-  HOME_URI = uri;
-}
 
 /**
  * Send an email.
  * @param object options
  * @param object template
- * @param function fn
+ * @param function cb
  */
-var send = exports.send = function (options, template, fn) {
+var send = exports.send = function (options, template, cb) {
   if ('function' === typeof template) {
-    fn = template;
+    cb = template;
     template = false;
   }
 
@@ -47,11 +39,12 @@ var send = exports.send = function (options, template, fn) {
 
   // merge options
   _.defaults(options, defaults);
-
+  
   if (template)
     jade.renderFile(path.join(__dirname, 'views', template.file),
-        template.locals, function (err, body) {
-      if (err) return fn ? fn(): null;
+        template.locals || {}, function (err, body) {
+      if (err) return cb ? cb(): null;
+      
       // create the message
       var message;
       if (template.html) {
@@ -59,69 +52,56 @@ var send = exports.send = function (options, template, fn) {
         message.attach_alternative(body);
       } else message = options;
       message.text = body;
+      
       // send email
-      SMTP.send(message, fn);
+      SMTP.send(message, cb);
     });
   else
     // send email
-    SMTP.send(options, fn);
+    SMTP.send(options, cb);
 };
 
 /**
- * Send the welcome message.
- * @param object user
+ * Send the morning email.
+ * @param object pack
  */
-var welcome = exports.welcome = function (member, confirm, fn) {
-  if (!HOME_URI) return fn ? fn(): null;
-  var to = member.displayName + ' <' + member.primaryEmail + '>';
-  send({
-    to: to,
-    subject: '[Island] Welcome to our home.'
-  }, {
-    file: 'welcome.jade',
-    html: true,
-    locals: { member: member, confirm: confirm }
-  }, fn);
+var morning = exports.morning = function (pack, cb) {
+  if (pack.emails.length === 0) return cb();
+  var _cb = _.after(pack.emails.length, cb);
+  _.each(pack.emails, function (to) {
+    send({
+      to: to,
+      from: 'Wolfpack <robot@grr.io>',
+      'reply-to': 'notifications+' + pack._id.toString() + '@grr.io',
+      subject: '[Wolfpack] Good Morning',
+    }, {
+      file: 'morning.jade',
+      html: true,
+    }, _cb);
+  });
 }
 
 /**
- * Send a notification.
+ * Send a reply.
  * @param object user
  */
-var notification = exports.notification = function (member, note, fn) {
-  if (!HOME_URI) return fn ? fn(): null;
-  var to = member.displayName + ' <' + member.primaryEmail + '>';
-  var subject = note.member_id.toString() === note.event.poster_id.toString() ?
-             '[Island] Your post, ' + note.event.data.p:
-             '[Island] ' + note.event.data.p + ' from ' + note.event.data.o;
-  send({
-    to: to,
-    from: note.event.data.m + ' <robot@island.io>',
-    'reply-to': 'notifications+' + note.member_id.toString() + note.event.post_id.toString() + '@island.io',
-    subject: subject
-  }, {
-    file: 'notification.jade',
-    html: true,
-    locals: {
-      note: note,
-      link: HOME_URI + '/' + note.event.data.k,
-      sets_link: HOME_URI + '/settings/' + member.key
-    }
-  }, fn);
-}
-
-/**
- * Send the error to Sander.
- * @param object err
- */
-var problem = exports.problem = function (err) {
-  if (!HOME_URI) return;
-  send({
-    to: 'Island Admin <sander@island.io>',
-    subject: 'Something wrong at Island'
-  }, {
-    file: 'problem.jade',
-    html: false,
-    locals: { err: err }
-  }, function () {});
+var reply = exports.reply = function (from, pack, cb) {
+  if (pack.emails.length === 0) return cb();
+  var _cb = _.after(pack.emails.length, cb);
+  _.each(pack.emails, function (to) {
+    send({
+      to: to,
+      from: 'ass' + ' <robot@grr.io>',
+      'reply-to': 'notifications+' + pack._id.toString() + '@grr.io',
+      subject: 'asfvadfsvadfvfdv'
+    }, {
+      file: 'reply.jade',
+      html: true,
+      // locals: {
+      //   note: note,
+      //   link: HOME_URI + '/' + note.event.data.k,
+      //   sets_link: HOME_URI + '/settings/' + member.key
+      // }
+    }, _cb);
+  });
 }

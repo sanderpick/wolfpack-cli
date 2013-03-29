@@ -14,14 +14,14 @@ var Step = require('step');
 /*
  * Create a db wrapper.
  */
-var MemberDb = exports.MemberDb = function (dB, options, cb) {
+var PackDb = exports.PackDb = function (dB, options, cb) {
   var self = this;
   self.dB = dB;
   self.app = options.app;
   self.collections = {};
 
   var collections = {
-    pack: {index: {email: 1, username: 1}},
+    pack: {index: {name: 1}},
   };
 
   Step(
@@ -53,14 +53,25 @@ var MemberDb = exports.MemberDb = function (dB, options, cb) {
 
 
 /*
- * Creates a new wolfpack.
+ * Creates a new pack.
  */
-MemberDb.prototype.createPack = function (props, cb) {
+PackDb.prototype.createPack = function (props, cb) {
   var self = this;
   if (!db.validate(props, ['name']))
     return cb(new Error('Invalid pack'));
   _.defaults(props, {
-    wolves: []
+    emails: []
   });
   db.createDoc(self.collections.pack, props, cb);
+}
+
+/*
+ * Adds a new email to a pack.
+ */
+PackDb.prototype.addEmail = function (email, packName, cb) {
+  var self = this;
+  if (!email || !packName)
+    return cb(new Error('Invalid email'));
+  self.collections.pack.update({name: packName},
+      {$addToSet: {emails: email}}, cb);
 }
