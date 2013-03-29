@@ -41,7 +41,7 @@ var send = exports.send = function (options, template, cb) {
   _.defaults(options, defaults);
   
   if (template)
-    jade.renderFile(path.join(__dirname, 'views', template.file),
+    jade.renderFile(path.join(__dirname, 'templates', template.file),
         template.locals || {}, function (err, body) {
       if (err) return cb ? cb(): null;
       
