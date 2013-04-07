@@ -1,11 +1,10 @@
 {
   "author": "Sander Pick <sanderpick@gmail.com> (git://github.com/sanderpick)",
   "name": "grr",
-  "subdomain": "api",
   "version": "0.1.0-0",
   "repository": {
     "type": "git",
-    "url": "git://github.com/sanderpick/wolfpack.git"
+    "url": "git://github.com/sanderpick/wolfpack-cli.git"
   },
   "dependencies": {
     "step": "0.0.5",
@@ -32,8 +31,5 @@
   },
   "engines": {
     "node": "~0.8.x"
-  },
-  "scripts": {
-    "start": "service.js"
   }
 }
