@@ -83,3 +83,10 @@ Some Examples:
     --dev                 target a development API server* running locally
     --debug               show more verbose output
 *Checkout the other half of Wolfpack, [wolfpack-server](https://github.com/sanderpick/wolfpack-server).
+
+## Development
+
+    git clone git@github.com:sanderpick/wolfpack-cli.git
+    cd wolfpack-cli
+    npm install
+    ./bin/grr [commands] [options] --dev
