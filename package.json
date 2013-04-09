@@ -37,8 +37,5 @@
   "engines": {
     "node": "~0.8.x"
   },
-  "bin": {
-    "grr": "./bin/grr"
-  },
   "main": "./lib/grr"
 }
