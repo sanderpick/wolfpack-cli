@@ -1,5 +1,5 @@
-# grr
-*Lightweight team updates*
+# cli
+*Command line interface for Wolfpack*
 
 <img src="https://github.com/sanderpick/wolfpack-cli/raw/develop/assets/grr.png"/>
 
