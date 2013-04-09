@@ -1,6 +1,7 @@
 # grr
 *Lightweight team updates*
 
+<img src="https://github.com/sanderpick/wolfpack-cli/raw/develop/assets/grr.png"/>
 
 ## One-line grr install
 
