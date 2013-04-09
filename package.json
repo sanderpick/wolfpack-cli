@@ -1,11 +1,16 @@
 {
   "author": "Sander Pick <sanderpick@gmail.com> (git://github.com/sanderpick)",
   "name": "grr",
-  "version": "0.1.0-0",
+  "description": "Lightweight team updates.",
+  "keywords": [
+    "cli"
+  ],
+  "version": "0.1.0",
   "repository": {
     "type": "git",
     "url": "git://github.com/sanderpick/wolfpack-cli.git"
   },
+  "preferGlobal": true,
   "dependencies": {
     "step": "0.0.5",
     "underscore": "~1.3.3",
@@ -31,5 +36,9 @@
   },
   "engines": {
     "node": "~0.8.x"
-  }
+  },
+  "bin": {
+    "grr": "./bin/grr"
+  },
+  "main": "./lib/grr"
 }
