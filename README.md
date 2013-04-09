@@ -1,3 +1,7 @@
+# Overview
+
+Wolfpack sends you an email each morning. Respond to this email with some notes about your plan for the day. If you have been added to a team by one of your friends or colleagues, they will receive a copy of your reply. Of course, you may add these users to your own teams to see their updates. Wolfpack teams are one-directional for maximum flexibility. Micro updates and team daily / weekly activity recaps should be added soon. User preferences, e.g., time zone, are needed.
+
 # grr
 *Command line interface for Wolfpack*
 
@@ -11,7 +15,6 @@
 ## Command Line Usage
 
 `grr` is mostly self-documenting. Try any of these commands to get started.
-
 
    **Usage:**
    
