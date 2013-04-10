@@ -1,6 +1,11 @@
-# grr
-*Lightweight team updates*
+# Overview
 
+Wolfpack sends you an email each morning. Respond to this email with some notes about your plan for the day. If you have been added to a team by one of your friends or colleagues, they will receive a copy of your reply. Of course, you may add these users to your own teams to see their updates. Wolfpack teams are one-directional for maximum flexibility. Micro updates and team daily / weekly activity recaps should be added soon. User preferences, e.g., time zone, are needed.
+
+# grr
+*Command line interface for Wolfpack*
+
+<img src="https://github.com/sanderpick/wolfpack-cli/raw/develop/assets/grr.png"/>
 
 ## One-line grr install
 
@@ -10,7 +15,6 @@
 ## Command Line Usage
 
 `grr` is mostly self-documenting. Try any of these commands to get started.
-
 
    **Usage:**
    
@@ -82,3 +86,10 @@ Some Examples:
     --dev                 target a development API server* running locally
     --debug               show more verbose output
 *Checkout the other half of Wolfpack, [wolfpack-server](https://github.com/sanderpick/wolfpack-server).
+
+## Development
+
+    git clone git@github.com:sanderpick/wolfpack-cli.git
+    cd wolfpack-cli
+    npm install
+    ./bin/grr [commands] [options] --dev
