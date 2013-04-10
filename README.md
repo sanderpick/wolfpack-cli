@@ -11,7 +11,7 @@ Wolfpack sends you an email each morning. Respond to this email with some notes 
 
     [sudo] npm install grr -g
 
-The global flag, `-g`, will attempt to symlink the `./bin/grr` executable to `PATH`. You will need to run `sudo` depending on your `npm` `{prefix}` (usually `/usr/local`) permissions.
+The global flag, `-g`, will attempt to symlink the `./bin/grr` executable into your `PATH`. You will need to run `sudo` depending on your `npm` `{prefix}` (usually `/usr/local`) permissions.
 
 ## Command Line Usage
 
