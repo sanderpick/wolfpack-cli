@@ -13,6 +13,8 @@ Wolfpack sends you an email each morning. Respond to this email with some notes 
 
 The global flag, `-g`, will attempt to symlink the `./bin/grr` executable into your `PATH`. You will need to run `sudo` depending on your `npm` `{prefix}` (usually `/usr/local`) permissions.
 
+N.B. grr requires Node 0.8.17. If your package manager isn't giving you the right version, you can pick up the binaries and source code at [nodejs.org](http://nodejs.org/dist/v0.8.17/)
+
 ## Command Line Usage
 
 `grr` is mostly self-documenting. Try any of these commands to get started.
