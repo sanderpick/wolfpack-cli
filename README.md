@@ -96,3 +96,6 @@ Some Examples:
     cd wolfpack-cli
     npm install
     ./bin/grr [commands] [options] --dev
+
+![http://i.imgur.com/pXdMyPg.png](best viewed)    
+
