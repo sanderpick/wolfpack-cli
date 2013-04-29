@@ -97,5 +97,6 @@ Some Examples:
     npm install
     ./bin/grr [commands] [options] --dev
 
-![http://i.imgur.com/pXdMyPg.png](best viewed)    
+
+<img src="http://i.imgur.com/pXdMyPg.png"/>
 
